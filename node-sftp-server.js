@@ -373,6 +373,7 @@ var SFTPSession = (function(superClass) {
           return this.sftpStream.handle(reqid, handle);
         }.bind(this));
       case "w":
+      case "wx":
         rs = new Readable();
         started = false;
         rs._read = (function(_this) {
