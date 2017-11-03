@@ -199,6 +199,10 @@ var Statter = (function() {
     return this.sftpStream.status(this.reqid, ssh2.SFTP_STATUS_CODE.NO_SUCH_FILE);
   };
 
+  Statter.prototype.ok = function(){
+    return this.sftpStream.status(this.reqid, ssh2.SFTP_STATUS_CODE.OK);
+  };
+
   Statter.prototype._get_mode = function() {
     return this.type | this.permissions;
   };
@@ -238,7 +242,7 @@ var SFTPSession = (function(superClass) {
     "REALPATH", "STAT", "LSTAT", "FSTAT",
     "OPENDIR", "CLOSE", "REMOVE", "READDIR",
     "OPEN", "READ", "WRITE", "RENAME",
-    "MKDIR", "RMDIR"
+    "MKDIR", "RMDIR", "SETSTAT"
   ];
 
   function SFTPSession(sftpStream1) {
@@ -307,6 +311,10 @@ var SFTPSession = (function(superClass) {
 
   SFTPSession.prototype.STAT = function(reqid, path) {
     return this.do_stat(reqid, path, 'STAT');
+  };
+
+  SFTPSession.prototype.SETSTAT = function(reqid, path) {
+    return this.do_stat(reqid, path, 'SETSTAT');
   };
 
   SFTPSession.prototype.LSTAT = function(reqid, path) {
